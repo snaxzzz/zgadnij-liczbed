@@ -1,30 +1,38 @@
-# zgadnij-liczbe
-# 🎮 Zgadnij liczbę – Python Game
+import random
 
-Prosta gra konsolowa napisana w Pythonie, w której gracz musi odgadnąć wylosowaną liczbę.
+najlepszy_wynik = None
 
-Projekt został stworzony w celu nauki logiki programowania, pętli, warunków oraz obsługi błędów użytkownika.
+while True:
+    sekret = random.randint(1, 100)
+    proby = 0
 
----
+    print("\n--- Zgadnij liczbę ---")
+    print("Zgadnij liczbę od 1 do 100")
 
-## Funkcje gry
+    while True:
+        try:
+            strzal = int(input("Podaj liczbę: "))
+        except ValueError:
+            print("To nie liczba!")
+            continue
 
-- Losowanie liczby od 1 do 100
-- Podpowiedzi: „za mało” / „za dużo”
-- Licznik prób
-- Informacja ile prób zajęło zgadnięcie
-- Możliwość grania wiele razy bez restartu programu
-- System rekordu (najlepszy wynik)
-- Obsługa błędów (gdy użytkownik wpisze literę zamiast liczby)
+        proby += 1
 
----
+        if strzal < sekret:
+            print("Za mało!")
+        elif strzal > sekret:
+            print("Za dużo!")
+        else:
+            print(f"Brawo! Zgadłeś w {proby} próbach!")
 
-## Jak uruchomić
+            if najlepszy_wynik is None or proby < najlepszy_wynik:
+                najlepszy_wynik = proby
+                print("🔥 Nowy rekord!")
 
-1. Zainstaluj Python 3.x
-2. Otwórz terminal w folderze projektu
-3. Uruchom:
+            break
 
-```bash
-python zgadnij_liczbe.py
-tutaj zamieszczam link do obejrzenia jak dziala program https://youtu.be/KcMXEfc9yaU
+    print("Najlepszy wynik:", najlepszy_wynik)
+
+    again = input("Grasz jeszcze raz? (t/n): ")
+    if again.lower() == "n":
+        break
